@@ -8,12 +8,15 @@ You may obtain a copy of the License at
     http://www.apache.org/licenses/LICENSE-2.0
 -->
 
-# Dell Container Storage Modules (CSM) for Authorization
-#EDIT
+
+# Dell Container Storage Modules (CSM) Authorization v1
+---
+#### Dell CSM Authorization v1 is deprecated and will no longer be supported. Please review the [documentation](https://dell.github.io/csm-docs/) to migrate to CSM Authorization v2. 
+---
+
 
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](https://github.com/dell/csm/blob/main/docs/CODE_OF_CONDUCT.md)
 [![License](https://img.shields.io/github/license/dell/karavi-authorization)](LICENSE)
-[![Docker Pulls](https://img.shields.io/docker/pulls/dellemc/csm-authorization-sidecar)](https://hub.docker.com/r/dellemc/csm-authorization-sidecar)
 [![Go version](https://img.shields.io/github/go-mod/go-version/dell/karavi-authorization)](go.mod)
 [![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/dell/karavi-authorization?include_prereleases&label=latest&style=flat-square)](https://github.com/dell/karavi-authorization/releases/latest)
 
@@ -30,12 +33,12 @@ For documentation, please visit [Container Storage Modules documentation](https:
 * [Committer Guide](https://github.com/dell/csm/blob/main/docs/COMMITTER_GUIDE.md)
 * [Contributing Guide](https://github.com/dell/csm/blob/main/docs/CONTRIBUTING.md)
 * [List of Adopters](https://github.com/dell/csm/blob/main/docs/ADOPTERS.md)
-* [Support](https://github.com/dell/csm/blob/main/docs/SUPPORT.md)
+* [Dell support](https://www.dell.com/support/incidents-online/en-us/contactus/product/container-storage-modules)
 * [Security](https://github.com/dell/csm/blob/main/docs/SECURITY.md)
 * [Project Structure](./docs/PROJECT_STRUCTURE.md)
 * [About](#about)
 
-## Building CSM for Authorization
+## Building CSM for Authorization v1
 
 If you wish to clone and build CSM for Authorization, a Linux host is required with the following installed:
 
@@ -52,7 +55,7 @@ Once all prerequisites are on the Linux host, follow the steps below to clone, b
 1. Clone the repository: `git clone https://github.com/dell/karavi-authorization.git`
 2. In the karavi-authorization directory, run the following to build and deploy: `make build builder dist`
 
-## Testing CSM for Authorization
+## Testing CSM for Authorization v1
 
 From the root directory where the repo was cloned, the unit tests can be executed as follows:
 
