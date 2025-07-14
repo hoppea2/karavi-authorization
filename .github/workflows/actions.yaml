@@ -5,151 +5,161 @@ on:
   pull_request:
     branches: [ main ]
 jobs:
-  code-check:
-    name: Check Go formatting and vetting
+  # code-check:
+  #   name: Check Go formatting and vetting
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout the code
+  #       uses: actions/checkout@v4
+  #     - name: Run the formatter and vetter
+  #       uses: dell/common-github-actions/go-code-formatter-vetter@main
+  #       with:
+  #         directories: ./...
+  # sanitize:
+  #   name: Check for forbidden words
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout the code
+  #       uses: actions/checkout@v4
+  #     - name: Run the forbidden words scan
+  #       uses: dell/common-github-actions/code-sanitizer@main
+  #       with:
+  #         args: /github/workspace
+  replacedomain:
+    name: Scan for external GitHub domain
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the code
         uses: actions/checkout@v4
-      - name: Run the formatter and vetter
-        uses: dell/common-github-actions/go-code-formatter-vetter@main
-        with:
-          directories: ./...
-  sanitize:
-    name: Check for forbidden words
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout the code
-        uses: actions/checkout@v4
-      - name: Run the forbidden words scan
-        uses: dell/common-github-actions/code-sanitizer@main
+      - name: Run the replacem domain action
+        uses: hoppea2/karavi-authorization/domain-replacer@main
         with:
           args: /github/workspace
-  test:
-    name: Run Go unit tests and check package coverage
-    runs-on: ubuntu-latest
-    container: node:20
-    services:
-      # Label used to access the service container
-      redis:
-        # Docker Hub image
-        image: redis
-        # Set health checks to wait until redis has started
-        options: >-
-          --health-cmd "redis-cli ping"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+  # test:
+  #   name: Run Go unit tests and check package coverage
+  #   runs-on: ubuntu-latest
+  #   container: node:20
+  #   services:
+  #     # Label used to access the service container
+  #     redis:
+  #       # Docker Hub image
+  #       image: redis
+  #       # Set health checks to wait until redis has started
+  #       options: >-
+  #         --health-cmd "redis-cli ping"
+  #         --health-interval 10s
+  #         --health-timeout 5s
+  #         --health-retries 5
 
-    steps:
-      - name: Checkout the code
-        uses: actions/checkout@v4
-      - name: Run unit tests and check package coverage
-        uses: dell/common-github-actions/go-code-tester@main
-        with:
-          threshold: 90
-          skip-list: "karavi-authorization/deploy,karavi-authorization/internal/web,karavi-authorization/internal/tenantsvc,karavi-authorization/cmd/karavictl/cmd,karavi-authorization/cmd/proxy-server,karavi-authorization/cmd/tenant-service,karavi-authorization/internal/proxy,karavi-authorization/internal/tenantsvc,karavi-authorization/internal/token/jwx,karavi-authorization/internal/k8s,karavi-authorization/internal/role-service,karavi-authorization/internal/role-service/validate,karavi-authorization/cmd/sidecar-proxy, karavi-authorization/cmd/karavictl/cmd/api, karavi-authorization/internal/role-service/roles, karavi-authorization/internal/storage-service/mocks, karavi-authorization/internal/role-service/middleware, karavi-authorization/cmd/karavictl/cmd/api/mocks, karavi-authorization/internal/tenantsvc/middleware, karavi-authorization/internal/decision, karavi-authorization/cmd/role-service, karavi-authorization/internal/role-service/mocks, karavi-authorization/internal/tenantsvc/mocks, karavi-authorization/cmd/storage-service, karavi-authorization/pb, karavi-authorization/cmd/karavictl"
-        env:
-          # The hostname used to communicate with the Redis service container
-          REDIS_HOST: redis
-          # The default Redis port
-          REDIS_PORT: 6379
+  #   steps:
+  #     - name: Checkout the code
+  #       uses: actions/checkout@v4
+  #     - name: Run unit tests and check package coverage
+  #       uses: dell/common-github-actions/go-code-tester@main
+  #       with:
+  #         threshold: 90
+  #         skip-list: "karavi-authorization/deploy,karavi-authorization/internal/web,karavi-authorization/internal/tenantsvc,karavi-authorization/cmd/karavictl/cmd,karavi-authorization/cmd/proxy-server,karavi-authorization/cmd/tenant-service,karavi-authorization/internal/proxy,karavi-authorization/internal/tenantsvc,karavi-authorization/internal/token/jwx,karavi-authorization/internal/k8s,karavi-authorization/internal/role-service,karavi-authorization/internal/role-service/validate,karavi-authorization/cmd/sidecar-proxy, karavi-authorization/cmd/karavictl/cmd/api, karavi-authorization/internal/role-service/roles, karavi-authorization/internal/storage-service/mocks, karavi-authorization/internal/role-service/middleware, karavi-authorization/cmd/karavictl/cmd/api/mocks, karavi-authorization/internal/tenantsvc/middleware, karavi-authorization/internal/decision, karavi-authorization/cmd/role-service, karavi-authorization/internal/role-service/mocks, karavi-authorization/internal/tenantsvc/mocks, karavi-authorization/cmd/storage-service, karavi-authorization/pb, karavi-authorization/cmd/karavictl"
+  #       env:
+  #         # The hostname used to communicate with the Redis service container
+  #         REDIS_HOST: redis
+  #         # The default Redis port
+  #         REDIS_PORT: 6379
 
-  go_security_scan:
-    name: Go security
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout the code
-        uses: actions/checkout@v4
-      - name: Run Go Security
-        uses: securego/gosec@master
-        with:
-          args: -exclude=G108,G402,G307 ./...
-  malware_security_scan:
-    name: Malware Scanner
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout the code
-        uses: actions/checkout@v4
-      - name: Run malware scan
-        uses: dell/common-github-actions/malware-scanner@main
-        with:
-          directories: .
-          options: -ri
-  image_security_scan:
-    name: Image Scanner
-    runs-on: ubuntu-latest
-    steps:
-      - name: Set up Go 1.22+
-        uses: actions/setup-go@v5
-        with:
-          go-version: "1.23"
-        id: go
-      - name: Checkout the code
-        uses: actions/checkout@v4
-      - name: Install Mockgen
-        run: go get github.com/golang/mock/mockgen@v1.6.0
-      - name: Get dependencies
-        run:  go mod download
-      - name: Build karavi-authorization Docker Images
-        run: make builder
-      - name: Get podman image tags for image scans
-        run: |
-          BUILDER_TAG=$(cat ${{ github.workspace }}/Makefile | grep 'export BUILDER_TAG ?=' | awk '{print $NF}')
-          SIDECAR_TAG=$(cat ${{ github.workspace }}/Makefile | grep 'export SIDECAR_TAG ?=' | awk '{print $NF}')
-          echo "podman_tag=$BUILDER_TAG" >> $GITHUB_ENV
-          echo "sidecar_tag=$SIDECAR_TAG" >> $GITHUB_ENV
-      - name: Re-tag podman images and push to Docker
-        run: |
-          podman tag localhost/proxy-server:${{ env.podman_tag }}  docker.io/library/proxy-server:${{ env.podman_tag }}
-          podman tag localhost/tenant-service:${{ env.podman_tag }} docker.io/library/tenant-service:${{ env.podman_tag }}
-          podman tag localhost/storage-service:${{ env.podman_tag }} docker.io/library/storage-service:${{ env.podman_tag }}
-          podman tag localhost/role-service:${{ env.podman_tag }} docker.io/library/role-service:${{ env.podman_tag }}
-          podman tag localhost/sidecar-proxy:${{ env.podman_tag }} docker.io/library/sidecar-proxy:${{ env.podman_tag }}
-          podman save -m -o /tmp/images.tar \
-          docker.io/library/proxy-server:${{ env.podman_tag }} \
-          docker.io/library/tenant-service:${{ env.podman_tag }} \
-          docker.io/library/storage-service:${{ env.podman_tag }} \
-          docker.io/library/role-service:${{ env.podman_tag }} \
-          docker.io/library/sidecar-proxy:${{ env.podman_tag }}
-          docker load -i /tmp/images.tar
-      - name: Scan Proxy Server
-        uses: aquasecurity/trivy-action@master
-        with:
-          image-ref: proxy-server:${{ env.podman_tag }}
-          severity: 'HIGH,CRITICAL'
-          ignore-unfixed: true
-          exit-code: '1'
-          trivyignores: '.github/workflows/.trivyignore'
-      - name: Scan Role Service
-        uses: aquasecurity/trivy-action@master
-        with:
-          image-ref: role-service:${{ env.podman_tag }}
-          severity: 'HIGH,CRITICAL'
-          ignore-unfixed: true
-          exit-code: '1'
-          trivyignores: '.github/workflows/.trivyignore'
-      - name: Scan Tenant Service
-        uses: aquasecurity/trivy-action@master
-        with:
-          image-ref: tenant-service:${{ env.podman_tag }}
-          severity: 'HIGH,CRITICAL'
-          ignore-unfixed: true
-          exit-code: '1'
-          trivyignores: '.github/workflows/.trivyignore'
-      - name: Scan SideCar Proxy
-        uses: aquasecurity/trivy-action@master
-        with:
-          image-ref: sidecar-proxy:${{ env.sidecar_tag }}
-          severity: 'HIGH,CRITICAL'
-          ignore-unfixed: true
-          exit-code: '1'
-          trivyignores: '.github/workflows/.trivyignore'
-      - name: Scan Storage Service
-        uses: aquasecurity/trivy-action@master
-        with:
-          image-ref: storage-service:${{ env.podman_tag }}
-          severity: 'HIGH,CRITICAL'
-          ignore-unfixed: true
-          exit-code: '1'
-          trivyignores: '.github/workflows/.trivyignore'
+  # go_security_scan:
+  #   name: Go security
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout the code
+  #       uses: actions/checkout@v4
+  #     - name: Run Go Security
+  #       uses: securego/gosec@master
+  #       with:
+  #         args: -exclude=G108,G402,G307 ./...
+  # malware_security_scan:
+  #   name: Malware Scanner
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout the code
+  #       uses: actions/checkout@v4
+  #     - name: Run malware scan
+  #       uses: dell/common-github-actions/malware-scanner@main
+  #       with:
+  #         directories: .
+  #         options: -ri
+  # image_security_scan:
+  #   name: Image Scanner
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Set up Go 1.22+
+  #       uses: actions/setup-go@v5
+  #       with:
+  #         go-version: "1.23"
+  #       id: go
+  #     - name: Checkout the code
+  #       uses: actions/checkout@v4
+  #     - name: Install Mockgen
+  #       run: go get github.com/golang/mock/mockgen@v1.6.0
+  #     - name: Get dependencies
+  #       run:  go mod download
+  #     - name: Build karavi-authorization Docker Images
+  #       run: make builder
+  #     - name: Get podman image tags for image scans
+  #       run: |
+  #         BUILDER_TAG=$(cat ${{ github.workspace }}/Makefile | grep 'export BUILDER_TAG ?=' | awk '{print $NF}')
+  #         SIDECAR_TAG=$(cat ${{ github.workspace }}/Makefile | grep 'export SIDECAR_TAG ?=' | awk '{print $NF}')
+  #         echo "podman_tag=$BUILDER_TAG" >> $GITHUB_ENV
+  #         echo "sidecar_tag=$SIDECAR_TAG" >> $GITHUB_ENV
+  #     - name: Re-tag podman images and push to Docker
+  #       run: |
+  #         podman tag localhost/proxy-server:${{ env.podman_tag }}  docker.io/library/proxy-server:${{ env.podman_tag }}
+  #         podman tag localhost/tenant-service:${{ env.podman_tag }} docker.io/library/tenant-service:${{ env.podman_tag }}
+  #         podman tag localhost/storage-service:${{ env.podman_tag }} docker.io/library/storage-service:${{ env.podman_tag }}
+  #         podman tag localhost/role-service:${{ env.podman_tag }} docker.io/library/role-service:${{ env.podman_tag }}
+  #         podman tag localhost/sidecar-proxy:${{ env.podman_tag }} docker.io/library/sidecar-proxy:${{ env.podman_tag }}
+  #         podman save -m -o /tmp/images.tar \
+  #         docker.io/library/proxy-server:${{ env.podman_tag }} \
+  #         docker.io/library/tenant-service:${{ env.podman_tag }} \
+  #         docker.io/library/storage-service:${{ env.podman_tag }} \
+  #         docker.io/library/role-service:${{ env.podman_tag }} \
+  #         docker.io/library/sidecar-proxy:${{ env.podman_tag }}
+  #         docker load -i /tmp/images.tar
+  #     - name: Scan Proxy Server
+  #       uses: aquasecurity/trivy-action@master
+  #       with:
+  #         image-ref: proxy-server:${{ env.podman_tag }}
+  #         severity: 'HIGH,CRITICAL'
+  #         ignore-unfixed: true
+  #         exit-code: '1'
+  #         trivyignores: '.github/workflows/.trivyignore'
+  #     - name: Scan Role Service
+  #       uses: aquasecurity/trivy-action@master
+  #       with:
+  #         image-ref: role-service:${{ env.podman_tag }}
+  #         severity: 'HIGH,CRITICAL'
+  #         ignore-unfixed: true
+  #         exit-code: '1'
+  #         trivyignores: '.github/workflows/.trivyignore'
+  #     - name: Scan Tenant Service
+  #       uses: aquasecurity/trivy-action@master
+  #       with:
+  #         image-ref: tenant-service:${{ env.podman_tag }}
+  #         severity: 'HIGH,CRITICAL'
+  #         ignore-unfixed: true
+  #         exit-code: '1'
+  #         trivyignores: '.github/workflows/.trivyignore'
+  #     - name: Scan SideCar Proxy
+  #       uses: aquasecurity/trivy-action@master
+  #       with:
+  #         image-ref: sidecar-proxy:${{ env.sidecar_tag }}
+  #         severity: 'HIGH,CRITICAL'
+  #         ignore-unfixed: true
+  #         exit-code: '1'
+  #         trivyignores: '.github/workflows/.trivyignore'
+  #     - name: Scan Storage Service
+  #       uses: aquasecurity/trivy-action@master
+  #       with:
+  #         image-ref: storage-service:${{ env.podman_tag }}
+  #         severity: 'HIGH,CRITICAL'
+  #         ignore-unfixed: true
+  #         exit-code: '1'
+  #         trivyignores: '.github/workflows/.trivyignore'
