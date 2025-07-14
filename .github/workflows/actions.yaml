@@ -47,6 +47,7 @@ jobs:
           title: "Replace external GitHub domain"
           body: "This PR replaces all references to https://github.com/dell/ with https://eos2git.cec.lab.emc.com/CSM/"
           branch: domain-replacement
+          base: main
 
   # test:
   #   name: Run Go unit tests and check package coverage
