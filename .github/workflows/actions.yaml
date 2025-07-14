@@ -38,7 +38,7 @@ jobs:
          git config user.name "github-actions"
          git config user.email "github-actions@github.com"
          git checkout -b domain-replacement
-         git add .
+         git add . ':!./.github/workflows/'
          git commit -m "Replace external GitHub domain with internal Enterprise domain"
          git push origin domain-replacement
       - name: Create Pull Request
