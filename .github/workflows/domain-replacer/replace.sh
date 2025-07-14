@@ -5,7 +5,9 @@ GLOB_PATTERN="${1:-**/*.{md,yml,yaml,txt,py}}"
 
 echo "Scanning files matching: $GLOB_PATTERN"
 
-FILES=$(find . -type f \( -name "*.md" -o -name "*.yml" -o -name "*.yaml" -o -name "*.txt" -o -name "*.py" \))
+
+FILES=$(find . -type f \( -name "*.md" -o -name "*.yml" -o -name "*.yaml" -o -name "*.txt" -o -name "*.py" \) ! -path "./.github/workflows/*")
+
 
 for file in $FILES; do
   if grep -q 'https://github.com/dell/' "$file"; then
