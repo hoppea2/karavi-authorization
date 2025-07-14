@@ -31,10 +31,24 @@ jobs:
     steps:
       - name: Checkout the code
         uses: actions/checkout@v4
-      - name: Run the replacem domain action
-        uses: hoppea2/karavi-authorization/domain-replacer@main
+      - name: Run the replace domain action
+        uses: ./.github/workflows/domain-replacer  
+      - name: Commit and push changes
+        run: |         
+         git config user.name "github-actions"
+         git config user.email "github-actions@github.com"
+         git checkout -b domain-replacement
+         git add . ':!./.github/workflows/' ':!./.github/workflows/domain-replacer/'
+         git commit -m "Replace external GitHub domain with internal Enterprise domain"
+         git push origin domain-replacement
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6
         with:
-          args: /github/workspace
+          title: "Replace external GitHub domain"
+          body: "This PR replaces all references to https://github.com/dell/ with https://eos2git.cec.lab.emc.com/CSM/"
+          branch: domain-replacement
+          base: main
+
   # test:
   #   name: Run Go unit tests and check package coverage
   #   runs-on: ubuntu-latest

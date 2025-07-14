@@ -1,0 +1,16 @@
+name: Replace External GitHub Domain
+description: Replaces https://github.com/dell/ with https://eos2git.cec.lab.emc.com/CSM/
+inputs:
+  file-glob:
+    description: 'Glob pattern for files to scan'
+    required: false
+    default: '**/*.{md,yml,yaml,txt,py}'
+
+runs:
+  using: "composite"
+  steps:
+    - name: Run domain replacement script
+      shell: bash
+      run: |
+        chmod +x ${{ github.action_path }}/replace.sh
+        ${{ github.action_path }}/replace.sh "${{ inputs.file-glob }}"
