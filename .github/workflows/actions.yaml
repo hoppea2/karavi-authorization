@@ -32,7 +32,7 @@ jobs:
       - name: Checkout the code
         uses: actions/checkout@v4
       - name: Run the replacem domain action
-        uses: ./.github/actions/domain-replacer
+        uses: ./.github/workflows/domain-replacer
         with:
           args: /github/workspace
   # test:
