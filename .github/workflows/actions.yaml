@@ -48,6 +48,9 @@ jobs:
           body: "This PR replaces all references to https://github.com/dell/ with https://eos2git.cec.lab.emc.com/CSM/"
           branch: domain-replacement
           base: main
+          commit-message: "[create-pull-request] automated change"
+          rebase: false
+
 
   # test:
   #   name: Run Go unit tests and check package coverage
