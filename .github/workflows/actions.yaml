@@ -50,7 +50,12 @@ jobs:
             exit 0
           fi
           git commit -m "Replace external GitHub domain with internal Enterprise domain"
-          git push --force-with-lease origin domain-replacement
+          git push origin domain-replacement
+
+          
+      - name: Switch to base branch before PR
+        run: git checkout main
+
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6
@@ -61,8 +66,7 @@ jobs:
           base: main
           commit-message: "[create-pull-request] automated change"
           delete-branch: false
-          draft: false
-
+         
   # test:
   #   name: Run Go unit tests and check package coverage
   #   runs-on: ubuntu-latest
