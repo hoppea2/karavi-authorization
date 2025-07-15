@@ -33,14 +33,25 @@ jobs:
         uses: actions/checkout@v4
       - name: Run the replace domain action
         uses: ./.github/workflows/domain-replacer  
+        with:
+          file-glob: '**/*.{md,yml,yaml,txt,py}'
+
+      - name: Show Git Diff
+        run: git diff --stat || true
+
       - name: Commit and push changes
-        run: |         
-         git config user.name "github-actions"
-         git config user.email "github-actions@github.com"
-         git checkout -b domain-replacement
-         git add . ':!./.github/workflows/' ':!./.github/workflows/domain-replacer/'
-         git commit -m "Replace external GitHub domain with internal Enterprise domain"
-         git push origin domain-replacement
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git checkout -B domain-replacement
+          git add . ':!./.github/workflows/' ':!./.github/workflows/domain-replacer/'
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git commit -m "Replace external GitHub domain with internal Enterprise domain"
+          git push --force-with-lease origin domain-replacement
+
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6
         with:
@@ -49,8 +60,8 @@ jobs:
           branch: domain-replacement
           base: main
           commit-message: "[create-pull-request] automated change"
-          rebase: false
-
+          delete-branch: false
+          draft: false
 
   # test:
   #   name: Run Go unit tests and check package coverage
