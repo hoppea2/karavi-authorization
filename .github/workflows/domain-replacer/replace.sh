@@ -8,6 +8,8 @@ echo "Scanning files matching: $GLOB_PATTERN"
 
 FILES=$(find . -type f \( -name "*.md" -o -name "*.yml" -o -name "*.yaml" -o -name "*.txt" -o -name "*.py" \) ! -path "./.github/workflows/*")
 
+echo "$FILES"
+
 
 for file in $FILES; do
   if grep -q 'github.com/dell/' "$file"; then
@@ -15,3 +17,4 @@ for file in $FILES; do
     sed -i 's|github.com/dell/|eos2git.cec.lab.emc.com/CSM/|g' "$file"
   fi
 done
+
