@@ -27,12 +27,16 @@ jobs:
   #         args: /github/workspace
   replacedomain:
     name: Scan for external GitHub domain
+    
+
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout the code
+      - name: Checkout code
         uses: actions/checkout@v4
-      - name: Run the replace domain action
-        uses: ./.github/workflows/domain-replacer  
+
+      - name: Run domain replacement
+        uses: ./.github/actions/domain-replacer
         with:
           file-glob: '**/*.{md,yml,yaml,txt,py}'
 
@@ -50,22 +54,24 @@ jobs:
             exit 0
           fi
           git commit -m "Replace external GitHub domain with internal Enterprise domain"
-          git push origin domain-replacement
+          git push --force-with-lease origin domain-replacement
 
-          
-      - name: Switch to base branch before PR
-        run: git checkout main
+      - name: Install GitHub CLI
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gh
 
+      - name: Create Pull Request with gh CLI
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh pr create \
+            --title "Replace external GitHub domain" \
+            --body "This PR replaces all references to https://github.com/dell/ with https://eos2git.cec.lab.emc.com/CSM/" \
+            --base main \
+            --head domain-replacement \
+            --repo ${{ github.repository }}
 
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v6
-        with:
-          title: "Replace external GitHub domain"
-          body: "This PR replaces all references to https://github.com/dell/ with https://eos2git.cec.lab.emc.com/CSM/"
-          branch: domain-replacement
-          base: main
-          commit-message: "[create-pull-request] automated change"
-          delete-branch: false
          
   # test:
   #   name: Run Go unit tests and check package coverage
