@@ -32,7 +32,5 @@ find . -type f ! -path "./.github/workflows/*" | while read -r file; do
   fi
 done
 
-done
-
 
 
