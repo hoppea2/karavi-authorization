@@ -21,7 +21,7 @@ import (
 	storage "karavi-authorization/cmd/karavictl/cmd"
 	"net/url"
 
-	pmax "github.com/dell/gopowermax/v2"
+	pmax "eos2git.cec.lab.emc.com/CSM/gopowermax/v2"
 	"github.com/sirupsen/logrus"
 )
 

@@ -21,7 +21,7 @@ import (
 	storage "karavi-authorization/cmd/karavictl/cmd"
 	"net/url"
 
-	pscale "github.com/dell/goisilon"
+	pscale "eos2git.cec.lab.emc.com/CSM/goisilon"
 	"github.com/sirupsen/logrus"
 )
 
