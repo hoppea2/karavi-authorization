@@ -15,12 +15,12 @@ You may obtain a copy of the License at
 ---
 
 
-[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](https://github.com/dell/csm/blob/main/docs/CODE_OF_CONDUCT.md)
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](https://eos2git.cec.lab.emc.com/CSM/csm/blob/main/docs/CODE_OF_CONDUCT.md)
 [![License](https://img.shields.io/github/license/dell/karavi-authorization)](LICENSE)
 [![Go version](https://img.shields.io/github/go-mod/go-version/dell/karavi-authorization)](go.mod)
-[![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/dell/karavi-authorization?include_prereleases&label=latest&style=flat-square)](https://github.com/dell/karavi-authorization/releases/latest)
+[![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/dell/karavi-authorization?include_prereleases&label=latest&style=flat-square)](https://eos2git.cec.lab.emc.com/CSM/karavi-authorization/releases/latest)
 
-CSM for Authorization is part of the [CSM (Container Storage Modules)](https://github.com/dell/csm) open-source suite of Kubernetes storage enablers for Dell products. CSM for Authorization provides storage and Kubernetes administrators the ability to apply RBAC for Dell CSI Drivers. It does this by deploying a proxy between the CSI driver and the storage system to enforce role-based access and usage rules.
+CSM for Authorization is part of the [CSM (Container Storage Modules)](https://eos2git.cec.lab.emc.com/CSM/csm) open-source suite of Kubernetes storage enablers for Dell products. CSM for Authorization provides storage and Kubernetes administrators the ability to apply RBAC for Dell CSI Drivers. It does this by deploying a proxy between the CSI driver and the storage system to enforce role-based access and usage rules.
 
 Storage administrators of compatible storage platforms will be able to apply quota and RBAC rules that instantly and automatically restrict cluster tenants usage of storage resources. Users of storage through CSM for Authorization do not need to have storage admin root credentials to access the storage system.
 
@@ -28,13 +28,13 @@ For documentation, please visit [Container Storage Modules documentation](https:
 
 ## Table of Contents
 
-* [Code of Conduct](https://github.com/dell/csm/blob/main/docs/CODE_OF_CONDUCT.md)
-* [Maintainer Guide](https://github.com/dell/csm/blob/main/docs/MAINTAINER_GUIDE.md)
-* [Committer Guide](https://github.com/dell/csm/blob/main/docs/COMMITTER_GUIDE.md)
-* [Contributing Guide](https://github.com/dell/csm/blob/main/docs/CONTRIBUTING.md)
-* [List of Adopters](https://github.com/dell/csm/blob/main/docs/ADOPTERS.md)
+* [Code of Conduct](https://eos2git.cec.lab.emc.com/CSM/csm/blob/main/docs/CODE_OF_CONDUCT.md)
+* [Maintainer Guide](https://eos2git.cec.lab.emc.com/CSM/csm/blob/main/docs/MAINTAINER_GUIDE.md)
+* [Committer Guide](https://eos2git.cec.lab.emc.com/CSM/csm/blob/main/docs/COMMITTER_GUIDE.md)
+* [Contributing Guide](https://eos2git.cec.lab.emc.com/CSM/csm/blob/main/docs/CONTRIBUTING.md)
+* [List of Adopters](https://eos2git.cec.lab.emc.com/CSM/csm/blob/main/docs/ADOPTERS.md)
 * [Dell support](https://www.dell.com/support/incidents-online/en-us/contactus/product/container-storage-modules)
-* [Security](https://github.com/dell/csm/blob/main/docs/SECURITY.md)
+* [Security](https://eos2git.cec.lab.emc.com/CSM/csm/blob/main/docs/SECURITY.md)
 * [Project Structure](./docs/PROJECT_STRUCTURE.md)
 * [About](#about)
 
@@ -52,7 +52,7 @@ If you wish to clone and build CSM for Authorization, a Linux host is required w
 
 Once all prerequisites are on the Linux host, follow the steps below to clone, build and deploy CSM for Authorization:
 
-1. Clone the repository: `git clone https://github.com/dell/karavi-authorization.git`
+1. Clone the repository: `git clone https://eos2git.cec.lab.emc.com/CSM/karavi-authorization.git`
 2. In the karavi-authorization directory, run the following to build and deploy: `make build builder dist`
 
 ## Testing CSM for Authorization v1
