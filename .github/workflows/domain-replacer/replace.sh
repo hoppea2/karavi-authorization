@@ -23,20 +23,15 @@ set -e
 
 echo "Scanning for files to update..."
 
-find . -type f \( \
-  -name "*.md" -o \
-  -name "*.yml" -o \
-  -name "*.yaml" -o \
-  -name "*.txt" -o \
-  -name "*.py" -o \
-  -name "*.go" \
-  -name "*.sh" \
-\) ! -path "./.github/workflows/*" | while read -r file; do
+
+find . -type f ! -path "./.github/workflows/*" | while read -r file; do
   echo "Checking $file"
   if grep -q 'github.com/dell/' "$file"; then
     echo "Updating $file"
     sed -i 's|github.com/dell/|eos2git.cec.lab.emc.com/CSM/|g' "$file"
   fi
+done
+
 done
 
 
