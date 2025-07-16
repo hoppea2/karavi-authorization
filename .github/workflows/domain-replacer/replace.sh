@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-GLOB_PATTERN="${1:-**/*.{md,yml,yaml,txt,py}}"
+GLOB_PATTERN="${1:-**/*.{md,yml,yaml,txt,py,go,sh}}"
 
 echo "Scanning files matching: $GLOB_PATTERN"
 
