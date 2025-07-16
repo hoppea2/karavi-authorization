@@ -38,6 +38,9 @@ K3S_SELINUX_VERSION ?= 0.4-1
 build:
 	-mkdir -p ./bin
 	CGO_ENABLED=0 go build -o ./bin ./cmd/karavictl/
+https://github.com/dell/csm-operator
+https://github.com/csm-operator
+
 
 .PHONY: build-installer
 build-installer:
