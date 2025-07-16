@@ -36,7 +36,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run domain replacement
-        uses: ./.github/actions/domain-replacer
+        uses: ./.github/workflows/domain-replacer
         with:
           file-glob: '**/*.{md,yml,yaml,txt,py}'
 
