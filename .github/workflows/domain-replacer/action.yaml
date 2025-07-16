@@ -1,10 +1,10 @@
 name: Replace External GitHub Domain
 description: Replaces https://github.com/dell/ with https://eos2git.cec.lab.emc.com/CSM/
-inputs:
-  file-glob:
-    description: 'Glob pattern for files to scan'
-    required: false
-    default: '**/*.{md,yml,yaml,txt,py,go,sh}'
+# inputs:
+#   file-glob:
+#     description: 'Glob pattern for files to scan'
+#     required: false
+#     default: '**/*.{md,yml,yaml,txt,py,go,sh}'
 
 runs:
   using: "composite"
