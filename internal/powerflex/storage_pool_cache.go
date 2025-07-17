@@ -19,7 +19,7 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/dell/goscaleio"
+	"eos2git.cec.lab.emc.com/CSM/goscaleio"
 	lru "github.com/hashicorp/golang-lru"
 	"go.opentelemetry.io/otel/trace"
 )

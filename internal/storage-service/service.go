@@ -27,7 +27,7 @@ import (
 	"golang.org/x/sync/errgroup"
 	"golang.org/x/sync/semaphore"
 
-	"github.com/dell/goscaleio"
+	"eos2git.cec.lab.emc.com/CSM/goscaleio"
 	"github.com/sirupsen/logrus"
 )
 

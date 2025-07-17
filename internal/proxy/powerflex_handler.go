@@ -36,9 +36,9 @@ import (
 	"sync"
 	"time"
 
-	types "github.com/dell/goscaleio/types/v1"
+	types "eos2git.cec.lab.emc.com/CSM/goscaleio/types/v1"
 
-	"github.com/dell/goscaleio"
+	"eos2git.cec.lab.emc.com/CSM/goscaleio"
 	"github.com/sirupsen/logrus"
 	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
 	"go.opentelemetry.io/otel/attribute"
