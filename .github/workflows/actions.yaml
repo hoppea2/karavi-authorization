@@ -37,8 +37,8 @@ jobs:
 
       - name: Run domain replacement
         uses: ./.github/workflows/domain-replacer
-        with:
-          file-glob: '**/*.{md,yml,yaml,txt,py,go,sh}'
+        # with:
+        #   file-glob: '**/*.{md,yml,yaml,txt,py,go,sh}'
 
       - name: Show Git Diff
         run: git diff --stat || true
