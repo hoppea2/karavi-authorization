@@ -31,7 +31,7 @@ import (
 	"strings"
 	"sync"
 
-	pmax "github.com/dell/gopowermax/v2"
+	pmax "eos2git.cec.lab.emc.com/CSM/gopowermax/v2"
 
 	"github.com/julienschmidt/httprouter"
 	"github.com/sirupsen/logrus"

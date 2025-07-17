@@ -32,9 +32,9 @@ import (
 	"strings"
 	"time"
 
-	pscale "github.com/dell/goisilon"
-	pmax "github.com/dell/gopowermax/v2"
-	"github.com/dell/goscaleio"
+	pscale "eos2git.cec.lab.emc.com/CSM/goisilon"
+	pmax "eos2git.cec.lab.emc.com/CSM/gopowermax/v2"
+	"eos2git.cec.lab.emc.com/CSM/goscaleio"
 	"github.com/spf13/cobra"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"

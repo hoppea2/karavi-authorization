@@ -6,9 +6,9 @@ toolchain go1.24.1
 
 require (
 	github.com/alicebob/miniredis/v2 v2.34.0
-	github.com/dell/goisilon v1.19.0
-	github.com/dell/gopowermax/v2 v2.10.0
-	github.com/dell/goscaleio v1.20.0
+	eos2git.cec.lab.emc.com/CSM/goisilon v1.19.0
+	eos2git.cec.lab.emc.com/CSM/gopowermax/v2 v2.10.0
+	eos2git.cec.lab.emc.com/CSM/goscaleio v1.20.0
 	github.com/dustin/go-humanize v1.0.1
 	github.com/fsnotify/fsnotify v1.9.0
 	github.com/go-redis/redis v6.15.9+incompatible

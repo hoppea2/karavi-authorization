@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 package karavi;
-option go_package = "github.com/dell/karavi-authorization/pb";
+option go_package = "eos2git.cec.lab.emc.com/CSM/karavi-authorization/pb";
 
 
 message StorageCreateRequest {
