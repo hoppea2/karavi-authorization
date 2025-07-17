@@ -22,7 +22,7 @@ import (
 
 	storage "karavi-authorization/cmd/karavictl/cmd"
 
-	"github.com/dell/goscaleio"
+	"eos2git.cec.lab.emc.com/CSM/goscaleio"
 	"github.com/sirupsen/logrus"
 )
 

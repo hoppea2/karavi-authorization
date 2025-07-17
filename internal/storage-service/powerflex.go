@@ -4,8 +4,8 @@ import (
 	"context"
 	"sync"
 
-	"github.com/dell/goscaleio"
-	types "github.com/dell/goscaleio/types/v1"
+	"eos2git.cec.lab.emc.com/CSM/goscaleio"
+	types "eos2git.cec.lab.emc.com/CSM/goscaleio/types/v1"
 	"golang.org/x/sync/semaphore"
 )
 

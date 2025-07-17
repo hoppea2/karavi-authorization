@@ -24,7 +24,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/dell/goscaleio"
+	"eos2git.cec.lab.emc.com/CSM/goscaleio"
 	"github.com/sirupsen/logrus"
 	"gopkg.in/yaml.v2"
 )
